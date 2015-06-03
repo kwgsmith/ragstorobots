@@ -22,4 +22,9 @@ public class GUIManager : MonoBehaviour {
 	public void TogglePanel (GameObject panel) {
 		panel.SetActive (!panel.activeSelf);
 	}
+
+	public void ToggleTooltip (GameObject tooltip) {
+		tooltip.SetActive (!tooltip.activeSelf);
+	}
+
 }
