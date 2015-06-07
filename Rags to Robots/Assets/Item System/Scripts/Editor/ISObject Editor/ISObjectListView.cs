@@ -70,6 +70,16 @@ namespace WarpwareStudios.ItemSystem.Editor
 
 		void ShowComponents()
 		{
+			for (int i = 0; i < componentDatabase.Count; i++) 
+			{
+				ISObject chosen = componentDatabase.Get(i);
+				if(GUILayout.Button(chosen.Name, "Label"))
+				{
+					components = true;
+					showNewComponentDetails = true;
+					tempComponent = (ISComponent)chosen;
+				}
+			}
 		}
 
 		void ShowConsumables()

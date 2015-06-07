@@ -8,8 +8,8 @@ namespace WarpwareStudios.ItemSystem
 	[System.Serializable]
 	public class ISComponent : ISObject, IISComponent, IISStackable
 	{
-		int _recipeID;
-		int _maxStack = 200;
+		[SerializeField]int _recipeID;
+		[SerializeField]int _maxStack = 200;
 
 		#region IISComponent implementation
 

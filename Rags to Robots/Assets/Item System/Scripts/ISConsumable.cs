@@ -8,7 +8,7 @@ namespace WarpwareStudios.ItemSystem
 	[System.Serializable]
 	public class ISConsumable : ISObject, IISConsumable, IISStackable
 	{
-		int _maxStack = 25;
+		[SerializeField]int _maxStack = 25;
 
 		#region IISConsumable implementation
 		public void Effect ()

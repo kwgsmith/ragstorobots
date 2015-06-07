@@ -8,8 +8,8 @@ namespace WarpwareStudios.ItemSystem
 	[System.Serializable]
 	public class ISArmor : ISWearable, IISArmor
 	{
-		int _armorRating;
-		string _damageType;
+		[SerializeField]int _armorRating;
+		[SerializeField]string _damageType;
 
 		public ISArmor() : base()
 		{

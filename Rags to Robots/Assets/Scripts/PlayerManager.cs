@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using WarpwareStudios.InventorySystem;
+using WarpwareStudios.ItemSystem;
+
 
 /*
  * This class is for tracking player specific things like skills,
@@ -9,22 +13,14 @@ using System.Collections;
 public class PlayerManager : MonoBehaviour {
 
 	public static int inventorySlots;
+	
+	public InventoryUIManager inventoryManager;
 
-	public static Item[] inventory;
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		inventorySlots = 16;
-		inventory = new Item[inventorySlots];
-
-		//initialize each spot in the array as empty
-		for(int i = 0; i < inventory.Length; i++) 
-		{
-			 inventory[i] = Item.Empty();
-		}
-
-		//update inventory the first time
-		InventoryUIManager.update = true;
-
+		inventoryManager = GameObject.Find ("Inventory").GetComponent<InventoryUIManager> ();
+		inventoryManager.UpdateInventorySlots (inventorySlots);
 	}
 	
 	// Update is called once per frame
@@ -32,8 +28,26 @@ public class PlayerManager : MonoBehaviour {
 	
 	}
 
-	public static void AddToInventory(Item item)
+	public void AddToInventory(ISObject item)
 	{
-		
+		Debug.Log ("Adding " + item.Name + " to inventory!");
+		if (inventoryManager.itemSlots.Count <= inventorySlots) 
+		{
+			Debug.Log ("Inventory is not full");
+			int count = 0;
+			foreach (ItemSlot slot in inventoryManager.itemSlots) 
+			{
+				Debug.Log ("Checking slot " + count);
+				if (slot.empty) 
+				{
+					Debug.Log ("Checking slot " + count + " is empty!");
+					slot.LoadItem (item);
+					slot.empty = false;
+					return;
+				}
+				count++;
+			}
+		}
 	}
+
 }

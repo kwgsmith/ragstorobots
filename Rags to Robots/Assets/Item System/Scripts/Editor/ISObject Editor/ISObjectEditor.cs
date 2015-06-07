@@ -42,7 +42,7 @@ namespace WarpwareStudios.ItemSystem.Editor
 			if(componentDatabase == null)
 				componentDatabase = ISComponentDatabase.GetDatabase<ISComponentDatabase> (DATABASE_PATH, COMPONENT_DATABASE_NAME);
 			if(consumableDatabase == null)
-				consumableDatabase = ISConsumableDatabase.GetDatabase<ISConsumableDatabase> (DATABASE_PATH, COMPONENT_DATABASE_NAME);
+				consumableDatabase = ISConsumableDatabase.GetDatabase<ISConsumableDatabase> (DATABASE_PATH, CONSUMABLE_DATABASE_NAME);
 
 		}
 

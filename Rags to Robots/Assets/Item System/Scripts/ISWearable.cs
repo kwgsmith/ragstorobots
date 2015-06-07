@@ -83,7 +83,7 @@ namespace WarpwareStudios.ItemSystem
 		
 		//this code is to be placed in a new class later on
 		
-		public virtual void ShowStats()
+		public override void ShowStats()
 		{
 			base.ShowStats ();
 			_durability = System.Convert.ToInt32(EditorGUILayout.TextField ("Durability: ", _durability.ToString()));
