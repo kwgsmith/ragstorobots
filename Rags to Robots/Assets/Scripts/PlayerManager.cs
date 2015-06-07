@@ -31,9 +31,22 @@ public class PlayerManager : MonoBehaviour {
 	public void AddToInventory(ISObject item)
 	{
 		Debug.Log ("Adding " + item.Name + " to inventory!");
+		//if item exists add to the amount
+		foreach (ItemSlot itemSlot in inventoryManager.itemSlots) 
+		{
+			if(itemSlot.currentItem.Equals(item))
+			{
+				Debug.Log ("Item already exists! Adding one to amount.");
+				//this is quick and dirty, needs better implementation
+				itemSlot.amount++;
+				itemSlot.UpdateUI();
+				return;
+			}
+		}
+		//find first empty slot and put item in it
 		if (inventoryManager.itemSlots.Count <= inventorySlots) 
 		{
-			Debug.Log ("Inventory is not full");
+			Debug.Log ("Inventory slots are not full");
 			int count = 0;
 			foreach (ItemSlot slot in inventoryManager.itemSlots) 
 			{
