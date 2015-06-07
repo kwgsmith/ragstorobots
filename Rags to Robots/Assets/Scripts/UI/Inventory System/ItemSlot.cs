@@ -26,7 +26,7 @@ namespace WarpwareStudios.InventorySystem
 
 		public void LoadItem(ISObject item)
 		{
-			Debug.Log ("Loading " + item.Name + " into inventory slot!");
+			//Debug.Log ("Loading " + item.Name + " into inventory slot!");
 			currentItem = item;
 			amount++;
 			UpdateUI ();

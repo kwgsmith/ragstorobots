@@ -38,20 +38,23 @@ namespace WarpwareStudios.InventorySystem
 					newSlot.transform.SetParent(itemsPanel.transform, false);
 					newSlot.GetComponent<ItemSlot>().ClearItem();
 					itemSlots.Add(newSlot.GetComponent<ItemSlot>());
-					Debug.Log (itemSlots.Count + " new slots created.");
 				}
 			}
 		}
 
+		// NOTE: Debug statements left in the following for use to see if the adding of items is actually working
+		// DO NOT DELETE until testing is done with more than one or two items
+
+
 		public void AddToInventory(ISObject item, int totalSlotNum)
 		{
-			Debug.Log ("Adding " + item.Name + " to inventory!");
+			//Debug.Log ("Adding " + item.Name + " to inventory!");
 			//if item exists add to the amount
 			foreach (ItemSlot itemSlot in itemSlots) 
 			{
 				if(itemSlot.currentItem.Equals(item))
 				{
-					Debug.Log ("Item already exists! Adding one to amount.");
+					//Debug.Log ("Item already exists! Adding one to amount.");
 					//this is quick and dirty, needs better implementation
 					itemSlot.amount++;
 					itemSlot.UpdateUI();
@@ -61,14 +64,14 @@ namespace WarpwareStudios.InventorySystem
 			//find first empty slot and put item in it
 			if (itemSlots.Count <= totalSlotNum) 
 			{
-				Debug.Log ("Inventory slots are not full");
+				//Debug.Log ("Inventory slots are not full");
 				int count = 0;
 				foreach (ItemSlot slot in itemSlots) 
 				{
-					Debug.Log ("Checking slot " + count);
+					//Debug.Log ("Checking slot " + count);
 					if (slot.empty) 
 					{
-						Debug.Log ("Checking slot " + count + " is empty!");
+						//Debug.Log ("Checking slot " + count + " is empty!");
 						slot.LoadItem (item);
 						slot.empty = false;
 						return;
@@ -80,13 +83,13 @@ namespace WarpwareStudios.InventorySystem
 		
 		public void RemoveFromInventory(ISObject item)
 		{
-			Debug.Log ("Removing " + item.Name + " from inventory!");
+			//Debug.Log ("Removing " + item.Name + " from inventory!");
 			//if item exists subtract 1 from amount, then remove if amount is 0
 			foreach (ItemSlot itemSlot in itemSlots) 
 			{
 				if(itemSlot.currentItem.Equals(item))
 				{
-					Debug.Log ("Subtracting 1 from amount and removing if none left");
+					//Debug.Log ("Subtracting 1 from amount and removing if none left");
 					//this is quick and dirty, needs better implementation
 					itemSlot.amount--;
 					if(itemSlot.amount == 0)
