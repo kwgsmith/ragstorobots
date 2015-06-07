@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour {
 		PlayerManager player = GameObject.Find ("Player").GetComponent<PlayerManager>();
 		player.AddToInventory (itemDatabase [0]);
 		player.AddToInventory (itemDatabase [0]);
+		player.RemoveFromInventory (itemDatabase [0]);
+
 	}
 	
 	// Update is called once per frame
