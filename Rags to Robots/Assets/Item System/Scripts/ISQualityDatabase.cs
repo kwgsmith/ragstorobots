@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace WarpwareStudios.ItemSystem
 {
-	public class ISQualityDatabase : ScriptableObject
-	{
-		//[SerializeField]
-		public List<ISQuality> database = new List<ISQuality>();
-	}
+	public class ISQualityDatabase : ScriptableObjectDatabase<ISQuality> { }
 }
