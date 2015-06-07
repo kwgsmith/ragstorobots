@@ -1,7 +1,13 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Rags to Robots/Assets/Character/FaceAnimation.meta
 guid: c9ecae3c7cc95da40af548eb9682b1f9
 folderAsset: yes
 timeCreated: 1433304317
+=======
+guid: 0cb67432dc237af4c853981943218fe4
+folderAsset: yes
+timeCreated: 1433649207
+>>>>>>> origin/development:Rags to Robots/Assets/Character/FaceAnimation.meta
 licenseType: Free
 DefaultImporter:
   userData: 
