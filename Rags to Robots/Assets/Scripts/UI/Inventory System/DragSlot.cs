@@ -33,24 +33,27 @@ public class DragSlot : MonoBehaviour, IPointerDownHandler, IDragHandler {
 	{
 		RectTransformUtility.ScreenPointToLocalPointInRectangle (slotRectTransform, data.position, data.pressEventCamera, out pointerOffset); 
 
-		floatingSlot = Instantiate (slotPrefab);
-		floatTransform = floatingSlot.transform as RectTransform;
-		floatTransform.SetParent(canvasRectTransform, false);
+		floatingSlot = Instantiate (slotPrefab) as GameObject;
+		if (floatingSlot != null) 
+		{
+			floatTransform = floatingSlot.transform as RectTransform;
+			floatTransform.SetParent(canvasRectTransform, false);
+			floatTransform.sizeDelta = slotRectTransform.sizeDelta;
 
-		SetToMousePos (data);
-	
+			SetToMousePos (data);
+
+		}
 	}
 
-	public void OnPointerUp(PointerEventData data)
+	public void OnDragEnd(PointerEventData data)
 	{
-		slotRectTransform.SetAsLastSibling ();
-		RectTransformUtility.ScreenPointToLocalPointInRectangle (floatTransform, data.position, data.pressEventCamera, out pointerOffset); 
+		Destroy(floatingSlot);
 	}
 	
 	public void OnDrag(PointerEventData data)
 	{
 		//if there is no slot, just ignore
-		if (slotRectTransform == null)
+		if (slotRectTransform == null || floatingSlot == null || floatTransform == null)
 			return;
 		
 		SetToMousePos (data);
