@@ -12,9 +12,11 @@ namespace WarpwareStudios.InventorySystem
 	public class InventoryUIManager : MonoBehaviour {
 
 		public GameObject inventorySlotPrefab;
+		public GameObject itemPrefab;
 		public GameObject itemsPanel;
 
-		public List<ItemSlot> itemSlots = new List<ItemSlot>();
+
+		public List<InventorySlot> itemSlots = new List<InventorySlot>();
 
 		// Use this for initialization
 		void Start () {
@@ -36,8 +38,7 @@ namespace WarpwareStudios.InventorySystem
 					GameObject newSlot = Instantiate(inventorySlotPrefab);
 					newSlot.name = "Inventory Slot";
 					newSlot.transform.SetParent(itemsPanel.transform, false);
-					newSlot.GetComponent<ItemSlot>().ClearItem();
-					itemSlots.Add(newSlot.GetComponent<ItemSlot>());
+					itemSlots.Add(newSlot.GetComponent<InventorySlot>());
 				}
 			}
 		}
@@ -50,33 +51,47 @@ namespace WarpwareStudios.InventorySystem
 		{
 			//Debug.Log ("Adding " + item.Name + " to inventory!");
 			//if item exists add to the amount
-			foreach (ItemSlot itemSlot in itemSlots) 
+			foreach (InventorySlot itemSlot in itemSlots) 
 			{
-				if(itemSlot.currentItem.Equals(item))
+				if(itemSlot.Item != null)
 				{
-					//Debug.Log ("Item already exists! Adding one to amount.");
-					//this is quick and dirty, needs better implementation
-					itemSlot.amount++;
-					itemSlot.UpdateUI();
-					return;
+					//get item info in current slot
+					Item itemInSlot = itemSlot.Item.GetComponent<Item>();
+					//if there is something in the slot, and it's name is equal to the current item add one to amount
+					if(itemInSlot != null && itemInSlot.itemData.Name.Equals(item.Name))
+					{
+						//Debug.Log ("Item already exists! Adding one to amount.");
+						//this is quick and dirty, needs better implementation
+						itemInSlot.amount++;
+						itemInSlot.UpdateUI();
+						return;
+					}
 				}
 			}
 			//find first empty slot and put item in it
 			if (itemSlots.Count <= totalSlotNum) 
 			{
+				//instantiate item
+				GameObject temp = Instantiate (itemPrefab); 
+				Item itemToAdd = temp.GetComponent<Item>();
+				//prepare prefab with item info
+				itemToAdd.LoadItem(item);
+
 				//Debug.Log ("Inventory slots are not full");
 				int count = 0;
-				foreach (ItemSlot slot in itemSlots) 
+				foreach (InventorySlot slot in itemSlots) 
 				{
 					//Debug.Log ("Checking slot " + count);
-					if (slot.empty) 
+					//if slot is empty
+					if (slot.Item == null) 
 					{
 						//Debug.Log ("Checking slot " + count + " is empty!");
-						slot.LoadItem (item);
-						slot.empty = false;
+						//put the item in the slot
+						itemToAdd.transform.SetParent(slot.transform);
 						return;
 					}
 					count++;
+
 				}
 			}
 		}
@@ -85,19 +100,25 @@ namespace WarpwareStudios.InventorySystem
 		{
 			//Debug.Log ("Removing " + item.Name + " from inventory!");
 			//if item exists subtract 1 from amount, then remove if amount is 0
-			foreach (ItemSlot itemSlot in itemSlots) 
+			foreach (InventorySlot itemSlot in itemSlots) 
 			{
-				if(itemSlot.currentItem.Equals(item))
+				if(itemSlot.Item != null)
 				{
-					//Debug.Log ("Subtracting 1 from amount and removing if none left");
-					//this is quick and dirty, needs better implementation
-					itemSlot.amount--;
-					if(itemSlot.amount == 0)
+					//get item info in current slot
+					Item itemInSlot = itemSlot.Item.GetComponent<Item>();
+					//if there is something in the slot, and it's name is equal to the current item add one to amount
+					if(itemInSlot != null && itemInSlot.itemData.Name.Equals(item.Name))
 					{
-						itemSlot.ClearItem();
+						//Debug.Log ("Subtracting 1 from amount and removing if none left");
+						//this is quick and dirty, needs better implementation
+						itemInSlot.amount--;
+						if(itemInSlot.amount == 0)
+						{
+							itemInSlot.ClearItem();
+						}
+						itemInSlot.UpdateUI();
+						return;
 					}
-					itemSlot.UpdateUI();
-					return;
 				}
 			}
 		}

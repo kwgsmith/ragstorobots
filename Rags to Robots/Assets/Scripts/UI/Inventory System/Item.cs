@@ -6,13 +6,12 @@ using WarpwareStudios.ItemSystem;
 
 namespace WarpwareStudios.InventorySystem
 {
-	public class ItemSlot : MonoBehaviour {
+	public class Item : MonoBehaviour {
 
-		public ISObject currentItem;
-		public Text currentItemName;
+		public ISObject itemData;
+		public Text itemNameText;
 		public Text amountText;
 		public int amount;
-		public bool empty = true;
 		public bool update;
 
 		void Update ()
@@ -27,23 +26,19 @@ namespace WarpwareStudios.InventorySystem
 		public void LoadItem(ISObject item)
 		{
 			//Debug.Log ("Loading " + item.Name + " into inventory slot!");
-			currentItem = item;
+			itemData = item;
 			amount++;
 			UpdateUI ();
 		}
 		
 		public void ClearItem()
 		{
-			empty = true;
-			currentItem = new ISObject();
-			amount = 0;
-
-			UpdateUI ();
+			Destroy (this.gameObject);
 		}
 
 		public void UpdateUI ()
 		{
-			currentItemName.text = currentItem.Name;
+			itemNameText.text = itemData.Name;
 			SetTextNumberOfItems ();
 		}
 
