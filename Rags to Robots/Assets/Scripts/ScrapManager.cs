@@ -4,10 +4,7 @@ using System.Collections;
 
 public class ScrapManager : MonoBehaviour {
 
-	public Text junkPileNum;
-	public float scrapValue;
 	public int scrapTotal;
-
 	public static int scrapAmount;
 
 	private Text scrapText;
@@ -30,10 +27,9 @@ public class ScrapManager : MonoBehaviour {
 	void Start () {
 		scrapAmount = 0;
 		buttonPressed = false;
-		scrapText = this.GetComponent<Text>();
-		scrapTotal = 100 * int.Parse(junkPileNum.text);
+		//scrapText = this.GetComponent<Text>();
 
-		scrapText.text = scrapAmount + "/" + scrapTotal;
+//		scrapText.text = scrapAmount + "/" + scrapTotal;
 	}
 	
 	// Update is called once per frame
@@ -41,20 +37,20 @@ public class ScrapManager : MonoBehaviour {
 	
 	}
 
+	//scrap collection
 	public void CollectScrap()
 	{
-		if (count >= 5) {
-			count = 1;
-		}
-		buttonPressed = true;
+
 	}
 
+	//function that checks to add scrap every frame
+	//there might be better way to do it
 	public void AddScrap(float currentTime)
 	{
 
 		timePassed += (currentTime - lastUpdate);
 
-		//if collect button is pressed, for 5 seconds add 1 scrap/sec
+		//if collection is started, for 5 seconds add 1 scrap/sec
 		if (timePassed >= 1 && buttonPressed && count <= 5) {
 			count++;
 			scrapAmount++;
@@ -68,11 +64,9 @@ public class ScrapManager : MonoBehaviour {
 		lastUpdate = currentTime;
 	}
 
+	
+	//function to refine scrap
 	public void RefineScrap()
 	{
-		MoneyManager.MakeMoney (scrapAmount * scrapValue);
-		scrapAmount = 0;
-		scrapText.text = scrapAmount.ToString ();
-
 	}
 }
