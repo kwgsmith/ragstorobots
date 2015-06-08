@@ -14,9 +14,11 @@ public class MouseAimCamera : MonoBehaviour {
 	[SerializeField]
 	private GameObject target; // game target to track
 
-	private float rotateSpeed = 10f; // allowed rotation speed
+	private float camSpeed = 10f; // allowed rotation speed
 	private float zoomSpeed = 4f; // allowed zoom speed
 	private float distance = 4f; // initial camera distance
+	private float minDistance = 2f; // minimum camera distance
+	private float maxDistance = 6f; // maximum camera distance
 	private float yMinLimit = -15f; // maximum angle camera may extend down
 	private float yMaxLimit = 75f; // maximum angle camera may extend up
 	private float x = 0f; // initial horizontal camera angle
@@ -36,7 +38,7 @@ public class MouseAimCamera : MonoBehaviour {
 		y = angles.x;
 
 		// initialize camera position
-		cameraControl(0f);
+		cameraControl(0f, true);
 	}
 	
 	// Update is called once per frame
@@ -46,32 +48,37 @@ public class MouseAimCamera : MonoBehaviour {
 		float delta = Input.GetAxis("Mouse ScrollWheel");
 
 		// camera rotation and simultaneous zoom if applicable
-		if (target != null && Input.GetMouseButton ((int)MouseButtonDown.MBD_RIGHT)) {
-			cameraControl(delta);
-		}
+		if (target != null && Input.GetMouseButton ((int)MouseButtonDown.MBD_RIGHT)) 
+		{ cameraControl(delta, false); }
 
 		// just zoom
 		if ( target != null && delta != 0.0f) 
-		{ cameraControl(delta); }
+		{ cameraControl(delta, true); }
 			
 	}
 	
-	void cameraControl(float delta)
+	void cameraControl(float delta, bool zoomOnly)
 	{
+
+		// TODO: enforce character turn at certain angle
+
 		distance -= delta*zoomSpeed;
-		if (distance <= 2f) 
+
+		// check for distance relative to allowed distances
+		if (distance <= minDistance) 
 		{
-			distance = 2f; // max zoom 
+			distance = minDistance; // min zoom distance
 		}
-		if (distance >= 6f) 
+		if (distance >= maxDistance) 
 		{
-			distance = 6f; // min zoom
+			distance = maxDistance; // max zoom distance
 		}
 		
-		if (target) {
-			x += Input.GetAxis("Mouse X") * rotateSpeed;
-			y -= Input.GetAxis("Mouse Y") * rotateSpeed;
-			
+		if (target) 
+		{
+			x += Input.GetAxis("Mouse X") * camSpeed;
+			y -= Input.GetAxis("Mouse Y") * camSpeed;
+
 			y = ClampAngle(y, yMinLimit, yMaxLimit);
 			
 			Quaternion rotation = Quaternion.Euler(y, x, 0);
