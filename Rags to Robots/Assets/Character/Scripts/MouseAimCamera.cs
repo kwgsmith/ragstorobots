@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 // enumerate mouse buttons for later use
@@ -16,11 +16,14 @@ public class MouseAimCamera : MonoBehaviour {
 
 	private float rotateSpeed = 10f; // allowed rotation speed
 	private float zoomSpeed = 4f; // allowed zoom speed
-	private float distance = 4f; // initial camera distance
-	private float yMinLimit = -15f; // maximum angle camera may extend down
-	private float yMaxLimit = 75f; // maximum angle camera may extend up
-	private float x = 0f; // initial horizontal camera angle
-	private float y = 0f;// initial vertical camera angle
+
+	public float distance = 4f; // initial camera distance
+	public float zoomOutLimit = 6f; // initial camera distance
+	public float zoomInLimit = 2f; // initial camera distance
+	public float yMinLimit = -15f; // maximum angle camera may extend down
+	public float yMaxLimit = 75f; // maximum angle camera may extend up
+	public float x = 0f; // initial horizontal camera angle
+	public float y = 0f;// initial vertical camera angle
 
 	// unused atm
 	private Vector3 offset; // offset vector for staying behind char
@@ -59,13 +62,13 @@ public class MouseAimCamera : MonoBehaviour {
 	void cameraControl(float delta)
 	{
 		distance -= delta*zoomSpeed;
-		if (distance <= 2f) 
+		if (distance <= zoomInLimit) 
 		{
-			distance = 2f; // max zoom 
+			distance = zoomInLimit; // zoom in
 		}
-		if (distance >= 6f) 
+		if (distance >= zoomOutLimit) 
 		{
-			distance = 6f; // min zoom
+			distance = zoomOutLimit; // zoomout
 		}
 		
 		if (target) {

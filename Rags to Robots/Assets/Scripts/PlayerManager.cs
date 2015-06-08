@@ -19,7 +19,7 @@ public class PlayerManager : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		inventorySlots = 16;
-		inventoryManager = GameObject.Find ("Inventory").GetComponent<InventoryUIManager> ();
+		inventoryManager = GameObject.Find ("GUI Manager").GetComponent<InventoryUIManager> ();
 		inventoryManager.UpdateInventorySlots (inventorySlots);
 	}
 	
