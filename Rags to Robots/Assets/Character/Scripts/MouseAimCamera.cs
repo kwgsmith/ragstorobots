@@ -14,8 +14,9 @@ public class MouseAimCamera : MonoBehaviour {
 	[SerializeField]
 	private GameObject target; // game target to track
 
-	private float rotateSpeed = 10f; // allowed rotation speed
+	private float camSpeed = 10f; // allowed rotation speed
 	private float zoomSpeed = 4f; // allowed zoom speed
+<<<<<<< HEAD
 
 	public float distance = 4f; // initial camera distance
 	public float zoomOutLimit = 6f; // initial camera distance
@@ -24,6 +25,15 @@ public class MouseAimCamera : MonoBehaviour {
 	public float yMaxLimit = 75f; // maximum angle camera may extend up
 	public float x = 0f; // initial horizontal camera angle
 	public float y = 0f;// initial vertical camera angle
+=======
+	private float distance = 4f; // initial camera distance
+	private float minDistance = 2f; // minimum camera distance
+	private float maxDistance = 6f; // maximum camera distance
+	private float yMinLimit = -15f; // maximum angle camera may extend down
+	private float yMaxLimit = 75f; // maximum angle camera may extend up
+	private float x = 0f; // initial horizontal camera angle
+	private float y = 0f;// initial vertical camera angle
+>>>>>>> origin/development
 
 	// unused atm
 	private Vector3 offset; // offset vector for staying behind char
@@ -39,7 +49,7 @@ public class MouseAimCamera : MonoBehaviour {
 		y = angles.x;
 
 		// initialize camera position
-		cameraControl(0f);
+		cameraControl(0f, true);
 	}
 	
 	// Update is called once per frame
@@ -49,19 +59,22 @@ public class MouseAimCamera : MonoBehaviour {
 		float delta = Input.GetAxis("Mouse ScrollWheel");
 
 		// camera rotation and simultaneous zoom if applicable
-		if (target != null && Input.GetMouseButton ((int)MouseButtonDown.MBD_RIGHT)) {
-			cameraControl(delta);
-		}
+		if (target != null && Input.GetMouseButton ((int)MouseButtonDown.MBD_RIGHT)) 
+		{ cameraControl(delta, false); }
 
 		// just zoom
 		if ( target != null && delta != 0.0f) 
-		{ cameraControl(delta); }
+		{ cameraControl(delta, true); }
 			
 	}
 	
-	void cameraControl(float delta)
+	void cameraControl(float delta, bool zoomOnly)
 	{
+
+		// TODO: enforce character turn at certain angle
+
 		distance -= delta*zoomSpeed;
+<<<<<<< HEAD
 		if (distance <= zoomInLimit) 
 		{
 			distance = zoomInLimit; // zoom in
@@ -69,12 +82,24 @@ public class MouseAimCamera : MonoBehaviour {
 		if (distance >= zoomOutLimit) 
 		{
 			distance = zoomOutLimit; // zoomout
+=======
+
+		// check for distance relative to allowed distances
+		if (distance <= minDistance) 
+		{
+			distance = minDistance; // min zoom distance
+		}
+		if (distance >= maxDistance) 
+		{
+			distance = maxDistance; // max zoom distance
+>>>>>>> origin/development
 		}
 		
-		if (target) {
-			x += Input.GetAxis("Mouse X") * rotateSpeed;
-			y -= Input.GetAxis("Mouse Y") * rotateSpeed;
-			
+		if (target) 
+		{
+			x += Input.GetAxis("Mouse X") * camSpeed;
+			y -= Input.GetAxis("Mouse Y") * camSpeed;
+
 			y = ClampAngle(y, yMinLimit, yMaxLimit);
 			
 			Quaternion rotation = Quaternion.Euler(y, x, 0);
