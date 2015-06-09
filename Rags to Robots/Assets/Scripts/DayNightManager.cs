@@ -16,7 +16,7 @@ public class DayNightManager : MonoBehaviour {
 	{
 		switched = false;
 		amPM = "AM";
-		timeText = this.GetComponent<Text>();
+		timeText = GetComponentInChildren<Text> ();
 	}
 
 	void OnEnable()
@@ -73,8 +73,8 @@ public class DayNightManager : MonoBehaviour {
 			hours = 1;
 			switched = false;
 		}
-		 
-		timeText.text = string.Format("{0:00}:{1:00}:{2:00}", hours, minutes,seconds) + " " + amPM;
+		if (timeText != null)
+			timeText.text = string.Format("{0:00}:{1:00}:{2:00}", hours, minutes,seconds) + " " + amPM;
 
 		lastUpdate = currentTime;
 	}
