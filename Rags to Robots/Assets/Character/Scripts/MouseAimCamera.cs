@@ -16,16 +16,6 @@ public class MouseAimCamera : MonoBehaviour {
 
 	private float camSpeed = 10f; // allowed rotation speed
 	private float zoomSpeed = 4f; // allowed zoom speed
-<<<<<<< HEAD
-
-	public float distance = 4f; // initial camera distance
-	public float zoomOutLimit = 6f; // initial camera distance
-	public float zoomInLimit = 2f; // initial camera distance
-	public float yMinLimit = -15f; // maximum angle camera may extend down
-	public float yMaxLimit = 75f; // maximum angle camera may extend up
-	public float x = 0f; // initial horizontal camera angle
-	public float y = 0f;// initial vertical camera angle
-=======
 	private float distance = 4f; // initial camera distance
 	private float minDistance = 2f; // minimum camera distance
 	private float maxDistance = 6f; // maximum camera distance
@@ -33,7 +23,6 @@ public class MouseAimCamera : MonoBehaviour {
 	private float yMaxLimit = 75f; // maximum angle camera may extend up
 	private float x = 0f; // initial horizontal camera angle
 	private float y = 0f;// initial vertical camera angle
->>>>>>> origin/development
 
 	// unused atm
 	private Vector3 offset; // offset vector for staying behind char
@@ -74,15 +63,7 @@ public class MouseAimCamera : MonoBehaviour {
 		// TODO: enforce character turn at certain angle
 
 		distance -= delta*zoomSpeed;
-<<<<<<< HEAD
-		if (distance <= zoomInLimit) 
-		{
-			distance = zoomInLimit; // zoom in
-		}
-		if (distance >= zoomOutLimit) 
-		{
-			distance = zoomOutLimit; // zoomout
-=======
+
 
 		// check for distance relative to allowed distances
 		if (distance <= minDistance) 
@@ -92,7 +73,6 @@ public class MouseAimCamera : MonoBehaviour {
 		if (distance >= maxDistance) 
 		{
 			distance = maxDistance; // max zoom distance
->>>>>>> origin/development
 		}
 		
 		if (target) 
