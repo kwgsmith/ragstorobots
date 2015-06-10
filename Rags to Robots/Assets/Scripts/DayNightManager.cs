@@ -19,7 +19,7 @@ public class DayNightManager : MonoBehaviour {
 	public Text timeText;
 	private int hours, minutes, seconds;
 	private float lastUpdate, timePassed;
-	private const float LENGTHOFSECOND = 0.1f;
+	private const float LENGTHOFSECOND = 0.01666666666f;
 	private bool switched;
 	private string amPM;
 
@@ -45,18 +45,18 @@ public class DayNightManager : MonoBehaviour {
 	}
 	
 	void Update() {
-//		UpdateSun();
-//		
-//		currentTimeOfDay += (Time.deltaTime / secondsInFullDay) * timeMultiplier;
-//		
-//		if (currentTimeOfDay >= 1) {
-//			currentTimeOfDay = 0;
-//		}
+		UpdateSun();
+		
+		currentTimeOfDay += (Time.deltaTime / secondsInFullDay) * timeMultiplier;
+		
+		if (currentTimeOfDay >= 1) {
+			currentTimeOfDay = 0;
+		}
 	}
 
 	public void UpdateTime(float currentTime)
 	{
-		//calculations done to make 12 minutes = 1 "day" of game time
+		//calculations done to make 24 minutes = 1 "day" of game time
 
 		timePassed += (currentTime - lastUpdate);
 	
