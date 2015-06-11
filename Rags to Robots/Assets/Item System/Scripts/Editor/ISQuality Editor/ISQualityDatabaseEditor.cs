@@ -19,10 +19,9 @@ namespace WarpwareStudios.ItemSystem.Editor
 
 		const string DATABASE_NAME = @"WWSItemSystemQualityDatabase.asset";
 		const string DATABASE_PATH = @"Database";
-		const string DATABASE_FULL_PATH = @"Assets/Item System/" + DATABASE_PATH + "/" + DATABASE_NAME;
 
 		//set up menu and hotkey
-		[MenuItem("Warpware Studios/Database/Quality Editor %#i")]
+		[MenuItem("Warpware Studios/Database/Quality Editor %#w")]
 		public static void init()
 		{
 			ISQualityDatabaseEditor window = EditorWindow.GetWindow<ISQualityDatabaseEditor> ();

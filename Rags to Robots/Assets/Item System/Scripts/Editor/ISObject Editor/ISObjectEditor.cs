@@ -22,7 +22,7 @@ namespace WarpwareStudios.ItemSystem.Editor
 		const string DATABASE_FULL_PATH = @"Assets/Item System/" + DATABASE_PATH + "/" + WEAPON_DATABASE_NAME;
 
 		//set up menu and hotkey
-		[MenuItem("Warpware Studios/Database/Item Editor %#w")]
+		[MenuItem("Warpware Studios/Database/Item Editor %#i")]
 		public static void init()
 		{
 			ISObjectEditor window = EditorWindow.GetWindow<ISObjectEditor> ();

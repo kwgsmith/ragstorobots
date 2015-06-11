@@ -45,6 +45,10 @@ namespace WarpwareStudios.ItemSystem
 
 		//this code is to be placed in a new class later on
 
+		ISQualityDatabase qdb;
+		int qualitySelectedIndex = 0;
+		string[] option;
+
 		public virtual void ShowStats()
 		{	
 
@@ -59,9 +63,22 @@ namespace WarpwareStudios.ItemSystem
 		{
 			GUILayout.Label ("Icon");
 		}
+
+		public ISObject()
+		{
+			string DATABASE_NAME = @"WWSItemSystemQualityDatabase.asset";
+			string DATABASE_PATH = @"Database";
+			qdb = ISQualityDatabase.GetDatabase<ISQualityDatabase> (DATABASE_PATH, DATABASE_NAME);
+
+			option = new string[qdb.Count];
+
+			for (int i = 0; i < qdb.Count; i++) {
+				option[i] = qdb.Get(i).Name;
+			}
+		}
 		public void DisplayQuality()
 		{
-			GUILayout.Label ("Quality");
+			qualitySelectedIndex = EditorGUILayout.Popup ("Quality", qualitySelectedIndex, option);
 		}
 
 	}
