@@ -11,15 +11,32 @@ public class ScrapSpawn : MonoBehaviour {
 	void Start()
 	{
 		//timeManager = GameObject.Find ("DayNightManager").GetComponent<DayNightManager> ();
+		timeManager = GameObject.Find ("Clock").GetComponent<DayNightManager>();
 	}
 
 	// Update is called once per frame
 	void Update () 
 	{
-		// TODO: sync spawn to timer
-		//if (timeManager.timeText) {
-		//}
 
+		// TODO: sync spawn to timer
+		if (timeManager.currentTimeOfDay >= 0.1f && timeManager.currentTimeOfDay <= 0.11f) 
+		{
+			for(int i=0; i < 100; i++)
+			{
+				Instantiate(scrap, this.transform.position, this.transform.rotation);
+			}
+		}
+
+		if (timeManager.currentTimeOfDay >= 0.1f && timeManager.currentTimeOfDay <= 0.15f) 
+		{
+			this.transform.GetComponent<Collider>().isTrigger = true;
+		}
+		else 
+		{
+			this.transform.GetComponent<Collider>().isTrigger = false;
+		}
+
+		/* Test area
 		if (count == 0) 
 		{
 			for(int i=0; i < 100; i++)
@@ -38,6 +55,6 @@ public class ScrapSpawn : MonoBehaviour {
 			this.transform.GetComponent<Collider>().isTrigger = false;
 		}
 
-		count = count - 1;
+		count = count - 1;*/
 	}
 }
