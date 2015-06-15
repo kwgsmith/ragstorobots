@@ -3,7 +3,9 @@ using System.Collections;
 
 public class BuildManager : MonoBehaviour {
 
+
 	public GameObject itemBuildPrefab;
+
 	private GameObject _buildItem;
 	public bool buildMode = false;
 	public GameObject guiManager;
