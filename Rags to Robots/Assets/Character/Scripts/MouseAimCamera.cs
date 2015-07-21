@@ -58,10 +58,6 @@ public class MouseAimCamera : MonoBehaviour {
 		if ( target != null && delta != 0.0f) 
 		{ cameraControl(delta, true); }
 
-		// reinitialize camera position
-		cameraControl(0f, true);
-
-			
 	}
 	
 	void cameraControl(float delta, bool zoomOnly)
