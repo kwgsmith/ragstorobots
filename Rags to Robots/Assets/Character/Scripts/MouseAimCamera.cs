@@ -11,6 +11,8 @@ enum MouseButtonDown
 
 public class MouseAimCamera : MonoBehaviour {
 
+	//TODO: obstacle avoidance measures to prevent clipping
+
 	[SerializeField]
 	private GameObject target; // game target to track
 
@@ -30,10 +32,11 @@ public class MouseAimCamera : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		offset = target.transform.position - transform.position; // set offset vector
+		//unused vector
+		offset = target.transform.localPosition - transform.localPosition; // set offset vector
 
 		// angle assignment
-		Vector3 angles = transform.eulerAngles;
+		Vector3 angles = transform.localEulerAngles;
 		x = angles.y;
 		y = angles.x;
 
@@ -54,6 +57,10 @@ public class MouseAimCamera : MonoBehaviour {
 		// just zoom
 		if ( target != null && delta != 0.0f) 
 		{ cameraControl(delta, true); }
+
+		// reinitialize camera position
+		cameraControl(0f, true);
+
 			
 	}
 	
@@ -77,16 +84,20 @@ public class MouseAimCamera : MonoBehaviour {
 		
 		if (target) 
 		{
-			x += Input.GetAxis("Mouse X") * camSpeed;
-			y -= Input.GetAxis("Mouse Y") * camSpeed;
+			// prevents rotation of the camera if only zooming
+			if(!zoomOnly)
+			{
+				x += Input.GetAxis("Mouse X") * camSpeed;
+				y -= Input.GetAxis("Mouse Y") * camSpeed;
+			}
 
 			y = ClampAngle(y, yMinLimit, yMaxLimit);
 			
 			Quaternion rotation = Quaternion.Euler(y, x, 0);
-			Vector3 position = rotation * new Vector3(0.0f, 0.0f, -distance) + target.transform.position;
+			Vector3 position = rotation * new Vector3(0.0f, 0.0f, -distance) + target.transform.localPosition;
 			
-			transform.rotation = rotation;
-			transform.position = position;
+			transform.localRotation = rotation;
+			transform.localPosition = position;
 		}
 	}
 
